@@ -1,6 +1,8 @@
 # 说明
 JDCookie获取Python版
 
+当前状态：未开发完毕
+
 # 修改
 Chromedriver目录内置版本：96.0.4664.45（自行按需求更改）
 
@@ -11,7 +13,7 @@ ChromeDriver下载地址：http://npm.taobao.org/mirrors/chromedriver
 ## 安装
 ```text
 # 安装所需的库
-pip install -r requirements.txt
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
 # 启动
 python app.py
