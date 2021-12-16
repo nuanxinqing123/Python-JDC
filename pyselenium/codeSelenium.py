@@ -21,7 +21,7 @@ options = webdriver.ChromeOptions()
 # 屏蔽扩展插件提示内容
 options.add_argument('--ignore-certificate-errors')
 # 静默运行
-# options.add_argument('--headless')
+options.add_argument('--headless')
 # 在 root 权限下运行
 options.add_argument('--no-sandbox')
 # 禁用GPU加速
