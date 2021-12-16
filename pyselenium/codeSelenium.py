@@ -126,15 +126,10 @@ def CodeStart2(phonecode):
         browser.close()
 
 
-# 滑块移速
-# def get_tracks(lent):
-#     track = [0, lent / 12, lent / 6, lent / 4, 0, lent / 4, lent / 6, lent / 12, 0, 0, 3,  1, 0, 0, -3, -2, -2, -1, 0, 1, 2, 3]
-#     return track
-
-# 滑动轨迹红包算法
+# 滑动轨迹算法
 def trace(sum):
     n = random.randint(6, 7)
-    print(n)
+    # print(n)
     listx = []
 
     for i in range(0, n - 1):
@@ -199,10 +194,10 @@ def SliderProcessing():
     # 倍率：65.9%, 66.5%, 66.2%
     result = detect_displacement(gapSrc, imgSrc)
 
-    print("距离" + str((int(result) / 0.662) + 5))
+    # print("距离" + str((int(result) / 0.662) + 5))
     # 计算距离
     tracks = trace((int(result) / 0.662) + 5)
-    print("tracks:" + str(tracks))
+    # print("tracks:" + str(tracks))
 
     # 移动
     slider = browser.find_element_by_xpath('//*[@id="captcha_modal"]/div/div[3]/div/img')
