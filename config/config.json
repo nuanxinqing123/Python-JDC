@@ -4,8 +4,8 @@
   },
   "QL": {
     "QL_Name": "私人服务器",
-    "Client_ID": "WIWYo3x6FPF-",
-    "Client_Secret": "YbNnnoDMc0yup-2XoJlmqSRn",
-    "URL": "http://192.168.2.208:5700"
+    "Client_ID": "",
+    "Client_Secret": "",
+    "URL": "http://IP:5700"
   }
 }
