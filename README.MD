@@ -3,6 +3,8 @@ JDCookie获取Python版
 
 当前状态：未开发完毕
 
+可用性（已测）：amd64_Win、amd64_Linux、amd64_Mac
+
 # 修改
 Chromedriver目录内置版本：96.0.4664.45（自行按需求更改）
 
