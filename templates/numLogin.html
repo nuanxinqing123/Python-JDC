@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for("static",filename='img/favicon.ico') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/css/mdui.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
+    <script src="https://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+    <title>{{ Title }}</title>
+    <style>
+        body {
+            background-size: auto;
+            background: url("{{ url_for("static",filename='img/bg.jpg') }}") repeat scroll left top;
+        }
+        .box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 550px;
+            padding: 40px;
+            background: rgba(250, 249, 249, .9);
+            box-sizing: border-box;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, .3);
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div id="data" style="padding-bottom: 10px;text-overflow:ellipsis; white-space:nowrap; overflow:hidden;">
+            <div class="mdui-textfield mdui-textfield-floating-label">
+               <i class="mdui-icon material-icons">contact_phone</i>
+               <label class="mdui-textfield-label">手机号码</label>
+                <label for="PhoneNumber"></label><input class="mdui-textfield-input" type="text" id="PhoneNumber" name="PhoneNumber" required/>
+            </div>
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">message</i>
+                <label class="mdui-textfield-label">短信验证码</label>
+                <label for="MessageCode"></label><input class="mdui-textfield-input" type="text" id="MessageCode" name="MessageCode" required/>
+            </div>
+            <div style="padding-top: 10px; text-align: center">
+               <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-50" id="LoginCodeBtn" >获取验证码</button>
+                &ensp;&ensp;&ensp;&ensp;
+               <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-50" id="LoginBtn" disabled>登录</button>
+            </div>
+        </div>
+        <hr>
+        <div id="result" style="text-align: center; font-size: large">
+            状态：等待登录
+        </div>
+    </div>
+    <script type="text/javascript">
+        const codeBtn = document.getElementById("LoginCodeBtn");
+        const Btn = document.getElementById("LoginBtn");
+        const Result = document.getElementById("result");
+        const data = document.getElementById("data");
+        codeBtn.onclick = function () {
+            codeBtn.disabled  = true
+            Btn.disabled  = false
+            Result.innerHTML = "状态：正在通过验证，请稍后"
+            // 创建对象
+            const xhr = new XMLHttpRequest()
+            // 初始化
+            xhr.open("POST", "/api/LoginNum", )
+            xhr.setRequestHeader('content-type', 'application/json');
+            xhr.responseType = "json";
+            // 发送
+            xhr.send(JSON.stringify({"number": document.getElementById("PhoneNumber").value}));
+            // 处理返回结果
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState === 4){
+                    if(xhr.status >= 200 && xhr.status < 300){
+                        if(xhr.response.code === 1001){
+                            Result.innerHTML = "状态：" + xhr.response.msg;
+                        }else {
+                            codeBtn.disabled  = false
+                            Btn.disabled  = true
+                            Result.innerHTML = "状态：" + xhr.response.msg;
+                        }
+                    }else {
+                        Result.innerHTML = "状态：请求出错，请刷新页面重新登录"
+                    }
+                }
+            }
+        };
+        Btn.onclick = function () {
+            Result.innerHTML = "状态：正在登录，请稍后"
+            const xhr = new XMLHttpRequest()
+            xhr.open("POST", "/api/LoginCode", )
+            xhr.setRequestHeader('content-type', 'application/json');
+            xhr.responseType = "json";
+            xhr.send(JSON.stringify({"code": document.getElementById("MessageCode").value}));
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState === 4){
+                    if(xhr.status >= 200 && xhr.status < 300){
+                        if(xhr.response.code === 1001){
+                            data.innerHTML = xhr.response.ck
+                            Result.innerHTML = "状态：" + xhr.response.msg;
+                        }else {
+                            Result.innerHTML = "状态：" + xhr.response.msg;
+                        }
+                    }else {
+                        Result.innerHTML = "状态：请求出错，请刷新页面重新登录"
+                    }
+                }
+            }
+        };
+    </script>
+</body>
+</html>

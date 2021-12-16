@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for("static",filename='img/favicon.ico') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/css/mdui.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
+    <script src="https://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+    <title>{{ Title }}</title>
+    <style>
+        body {
+            background-size: auto;
+            background: url("{{ url_for("static",filename='img/bg.jpg') }}") repeat scroll left top;
+        }
+        .box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 550px;
+            padding: 40px;
+            background: rgba(250, 249, 249, .9);
+            box-sizing: border-box;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, .3);
+            border-radius: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div id="result">
+            <img src="{{ url_for("static",filename='QR/2.png') }}" alt="QRCode">
+        </div>
+        <hr>
+        <div style="padding-top: 20px">
+            <p>Tips：二维码有效期只有两分钟</p>
+            <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-50" id="LoginBtn">
+                已完成扫码
+            </button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        const Btn = document.getElementById("LoginBtn");
+        const Result = document.getElementById("result");
+        Btn.onclick = function () {
+            Btn.disabled  = true
+            const xhr = new XMLHttpRequest()
+            xhr.open("POST", "/api/LoginQR", )
+            xhr.setRequestHeader('content-type', 'application/json');
+            xhr.responseType = "json";
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState === 4){
+                    if(xhr.status >= 200 && xhr.status < 300){
+                        if(xhr.response.code === 1001){
+                            Result.innerHTML = xhr.response.msg;
+                        }else {
+                            Result.innerHTML = xhr.response.msg;
+                        }
+                    }else {
+                        Result.innerHTML = "请求出错，请刷新页面重新登录"
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
