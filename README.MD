@@ -19,6 +19,8 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 python app.py
 ```
 
+体验地址：http://自己的IP:5000
+
 ## 配置文件
 ```json
 {
