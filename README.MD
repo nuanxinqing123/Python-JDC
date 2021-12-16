@@ -15,7 +15,7 @@ ChromeDriver下载地址：http://npm.taobao.org/mirrors/chromedriver
 ## 安装
 ```text
 # 安装所需的库
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+pip install -i https://pypi.mirrors.ustc.edu.cn/simple -r requirements.txt
 
 # 启动
 python app.py
