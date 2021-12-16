@@ -18,7 +18,7 @@ ChromeDriver下载地址：http://npm.taobao.org/mirrors/chromedriver
 yum install wget git unzip
 
 # 安装所需的库
-pip install -i https://pypi.mirrors.ustc.edu.cn/simple -r requirements.txt
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
 # 创建目录
 mkdir chromedriver && cd chromedriver
