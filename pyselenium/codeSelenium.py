@@ -21,7 +21,7 @@ options = webdriver.ChromeOptions()
 # 屏蔽扩展插件提示内容
 options.add_argument('--ignore-certificate-errors')
 # 静默运行
-# options.add_argument('--headless')
+options.add_argument('--headless')
 # 在 root 权限下运行
 options.add_argument('--no-sandbox')
 # 禁用GPU加速
@@ -34,7 +34,7 @@ options.add_argument('--incognito')
 # 开发者模式启动
 options.add_experimental_option('excludeSwitches', ['enable-automation'])
 # 优化加载
-# options.page_load_strategy = 'eager'
+options.page_load_strategy = 'eager'
 # 添加 User Agent
 user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25"
 options.add_argument(f'--user-agent={user_agent}')
@@ -118,7 +118,7 @@ def CodeStart2(phonecode):
         ck = browser.get_cookies()
         ck = cookie.clear(ck)
         return ck
-    except Exception as e:
+    except:
         # 获取失败
         return 1002
 
@@ -171,9 +171,9 @@ def SliderProcessing():
     # 倍率：65.9%, 66.5%, 66.2%
     # 滑块大小 58px
     result = detect_displacement(gapSrc, imgSrc)
-    print(result)
+    # print(result)
 
-    print("距离" + str((int(result) / 0.662) + 5))
+    # print("距离" + str((int(result) / 0.662) + 5))
     # 计算距离
     tracks = get_tracks((int(result) / 0.662) + 5)
 
