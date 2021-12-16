@@ -14,8 +14,18 @@ ChromeDriver下载地址：http://npm.taobao.org/mirrors/chromedriver
 
 ## 安装
 ```text
+# 安装所需工具(栗子：CentOS)
+yum install wget git unzip
+
 # 安装所需的库
 pip install -i https://pypi.mirrors.ustc.edu.cn/simple -r requirements.txt
+
+# 创建目录
+mkdir chromedriver && cd chromedriver
+
+# 安装Selenium
+wget https://mirrors.huaweicloud.com/chromium-browser-snapshots/Linux_x64/884014/chrome-linux.zip && unzip chrome-linux.zip
+wget https://npm.taobao.org/mirrors/chromedriver/92.0.4515.43/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && cd ..
 
 # 启动
 python app.py
@@ -37,4 +47,12 @@ python app.py
   }
 }
 ```
+
+## 错误排查
+
+Q：ImportError: libGL.so.1: cannot open shared object file: No such file or directory
+A：解决方法：yum install mesa-libGL.x86_64
+
+Q：
+A：
 
