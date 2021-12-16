@@ -21,7 +21,7 @@ options = webdriver.ChromeOptions()
 # 屏蔽扩展插件提示内容
 options.add_argument('--ignore-certificate-errors')
 # 静默运行
-options.add_argument('--headless')
+# options.add_argument('--headless')
 # 在 root 权限下运行
 options.add_argument('--no-sandbox')
 # 禁用GPU加速
@@ -33,8 +33,6 @@ options.add_argument('--disable-extensions')
 options.add_argument('--incognito')
 # 开发者模式启动
 options.add_experimental_option('excludeSwitches', ['enable-automation'])
-# 优化加载
-options.page_load_strategy = 'eager'
 # 添加 User Agent
 user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25"
 options.add_argument(f'--user-agent={user_agent}')
@@ -45,8 +43,10 @@ def CodeStart(phonenumber):
 
     # 启动驱动
     try:
+        options.binary_location = './chromedriver/chrome-linux/chrome'
         browser = webdriver.Chrome("./chromedriver/chromedriver", options=options)
     except:
+        options.binary_location = './chromedriver/chrome-win/chrome.exe'
         browser = webdriver.Chrome("./chromedriver/chromedriver.exe", options=options)
 
     browser.get("https://plogin.m.jd.com/login/login")
@@ -127,9 +127,37 @@ def CodeStart2(phonecode):
 
 
 # 滑块移速
-def get_tracks(lent):
-    track = [0, lent / 12, lent / 6, lent / 4, 0, lent / 4, lent / 6, lent / 12, 0, 0, 3,  1, 0, 0, -3, -2, -2, -1, 0, 1, 2, 3]
-    return track
+# def get_tracks(lent):
+#     track = [0, lent / 12, lent / 6, lent / 4, 0, lent / 4, lent / 6, lent / 12, 0, 0, 3,  1, 0, 0, -3, -2, -2, -1, 0, 1, 2, 3]
+#     return track
+
+# 滑动轨迹红包算法
+def trace(sum):
+    n = random.randint(6, 7)
+    print(n)
+    listx = []
+
+    for i in range(0, n - 1):
+        a = random.uniform(1, sum)  # 生成 n-1 个随机节点
+        listx.append(a)
+    listx.sort()  # 对节点排序
+    listx.append(sum)  # 设置第 n 个节点为 sum，即总额
+
+    listy = []
+    for i in range(len(listx)):
+        if i == 0:
+            b = listx[i]
+        else:
+            b = listx[i] - listx[i - 1]
+        listy.append(b)
+
+    listy.sort()
+    listy.reverse()
+
+    listz = [2, 0, 0, 0, -3, -2, -2, -1, 0, 1, 2, 3]
+    listy.extend(listz)
+
+    return listy
 
 
 # 距离算法
@@ -169,13 +197,12 @@ def SliderProcessing():
     # 显示图：420px, 260px
     # 原图：277px, 173px
     # 倍率：65.9%, 66.5%, 66.2%
-    # 滑块大小 58px
     result = detect_displacement(gapSrc, imgSrc)
-    # print(result)
 
-    # print("距离" + str((int(result) / 0.662) + 5))
+    print("距离" + str((int(result) / 0.662) + 5))
     # 计算距离
-    tracks = get_tracks((int(result) / 0.662) + 5)
+    tracks = trace((int(result) / 0.662) + 5)
+    print("tracks:" + str(tracks))
 
     # 移动
     slider = browser.find_element_by_xpath('//*[@id="captcha_modal"]/div/div[3]/div/img')

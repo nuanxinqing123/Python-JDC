@@ -38,8 +38,10 @@ def QRStart():
 
     # 启动驱动
     try:
+        options.binary_location = './chromedriver/chrome-linux/chrome'
         browser = webdriver.Chrome("./chromedriver/chromedriver", options=options)
     except:
+        options.binary_location = './chromedriver/chrome-win/chrome.exe'
         browser = webdriver.Chrome("./chromedriver/chromedriver.exe", options=options)
 
     # 入口地址
