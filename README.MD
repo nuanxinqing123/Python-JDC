@@ -13,6 +13,8 @@ Chromedriver目录内置版本：96.0.4664.45（自行按需求更改）
 ChromeDriver下载地址：http://npm.taobao.org/mirrors/chromedriver
 
 ## 安装
+运行环境(必须)：Python3.7 +
+
 ```text
 # 安装所需工具(栗子：CentOS)
 yum install wget git unzip
