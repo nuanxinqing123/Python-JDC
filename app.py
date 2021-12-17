@@ -74,12 +74,13 @@ def logincode():
 
 @app.route('/QRLogin')
 def qrLogin():
-    with open("./config/config.json", encoding="utf-8") as f:
-        config_json = json.load(f)
-
-    Title = config_json["Main"]["Title"]
-    qps.QRStart()
-    return render_template("qrLogin.html", Title=Title)
+    # with open("./config/config.json", encoding="utf-8") as f:
+    #     config_json = json.load(f)
+    #
+    # Title = config_json["Main"]["Title"]
+    # qps.QRStart()
+    # return render_template("qrLogin.html", Title=Title)
+    return "暂时禁用"
 
 
 @app.route('/api/LoginQR', methods=['POST'])
