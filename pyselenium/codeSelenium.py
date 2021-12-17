@@ -44,12 +44,13 @@ def CodeStart(phonenumber):
     global browser
 
     # 启动驱动
-    try:
-        options.binary_location = './chromedriver/chrome-linux/chrome'
-        browser = webdriver.Chrome("./chromedriver/chromedriver", options=options)
-    except:
-        options.binary_location = './chromedriver/chrome-win/chrome.exe'
-        browser = webdriver.Chrome("./chromedriver/chromedriver.exe", options=options)
+    browser = webdriver.Chrome(options=options)
+    # try:
+    #     options.binary_location = './chromedriver/chrome-linux/chrome'
+    #     browser = webdriver.Chrome("./chromedriver/chromedriver", options=options)
+    # except:
+    #     options.binary_location = './chromedriver/chrome-win/chrome.exe'
+    #     browser = webdriver.Chrome("./chromedriver/chromedriver.exe", options=options)
 
     browser.get("https://plogin.m.jd.com/login/login")
 
