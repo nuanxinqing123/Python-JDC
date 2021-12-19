@@ -23,10 +23,10 @@ yum install wget git
 docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome:latest
 
 # 安装所需的库
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
 # 启动
-python app.py
+python3 app.py
 ```
 
 体验地址：http://自己的IP:5100
@@ -37,7 +37,7 @@ python app.py
   "Main": {
     "Title": "网站标题"
   },
-  "Selenium Addr": "Dcoker Chrome地址",
+  "RemoteAddress": "Dcoker Chrome地址",
   "QL": {
     "QL_Name": "QL面板名字",
     "Client_ID": "ID",
