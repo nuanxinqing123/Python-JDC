@@ -24,6 +24,8 @@ options.add_argument('--ignore-certificate-errors')
 options.add_argument('--headless')
 # 限制浏览器大小 width：915, height: 1000
 options.add_argument("--window-size=915,1000")
+# 禁用webgl
+options.add_argument("--disable-webgl")
 # 在 root 权限下运行
 options.add_argument('--no-sandbox')
 # 禁用GPU加速
@@ -44,7 +46,9 @@ def CodeStart(phonenumber):
     global browser
 
     # 启动驱动
-    browser = webdriver.Chrome(options=options)
+    # browser = webdriver.Chrome(options=options)
+    options.binary_location = './chromedriver/chrome-win/chrome.exe'
+    browser = webdriver.Chrome("./chromedriver/chromedriver.exe", options=options)
     # try:
     #     options.binary_location = './chromedriver/chrome-linux/chrome'
     #     browser = webdriver.Chrome("./chromedriver/chromedriver", options=options)
@@ -54,23 +58,28 @@ def CodeStart(phonenumber):
 
     browser.get("https://plogin.m.jd.com/login/login")
 
-    number_ = browser.find_element_by_xpath('//*[@id="app"]/div/div[3]/p[1]/input')
+    number_ = browser.find_element(By.XPATH, '//*[@id="app"]/div/div[3]/p[1]/input')
     number_.clear()
     number_.send_keys(phonenumber)
-    time.sleep(1)
+    time.sleep(1.5)
 
     # 发送验证码
-    code_btn = browser.find_element_by_xpath('//*[@id="app"]/div/div[3]/p[2]/button')
+    code_btn = browser.find_element(By.XPATH, '//*[@id="app"]/div/div[3]/p[2]/button')
     code_btn.click()
 
     time.sleep(0.8)
+
+    # 文字验证：
+    # 图：//*[@id="cpc_img"]
+    # 字体：//*[@id="captcha_modal"]/div/div[3]/div/img
+
     # 判断是否有滑块
     try:
         x = 0
         for i in range(5):
             x += 1
             time.sleep(0.5)
-            slide = browser.find_element_by_xpath('//*[@id="cpc_img"]')
+            slide = browser.find_element(By.XPATH, '//*[@id="cpc_img"]')
             if slide:
                 print("出现滑块")
                 SliderProcessing()
@@ -80,7 +89,7 @@ def CodeStart(phonenumber):
     # 滑块之后
     try:
         time.sleep(1)
-        slide = browser.find_element_by_xpath('//*[@id="cpc_img"]')
+        slide = browser.find_element(By.XPATH, '//*[@id="cpc_img"]')
         if slide:
             x += 1
     except:
@@ -97,16 +106,16 @@ def CodeStart2(phonecode):
     global browser
 
     # 输入验证码
-    phonecode_ = browser.find_element_by_xpath('//*[@id="authcode"]')
+    phonecode_ = browser.find_element(By.XPATH, '//*[@id="authcode"]')
     phonecode_.clear()
     phonecode_.send_keys(phonecode)
 
     # 选中单选框
-    d_btn = browser.find_element_by_xpath('//*[@id="app"]/div/p[2]/input')
+    d_btn = browser.find_element(By.XPATH, '//*[@id="app"]/div/p[2]/input')
     d_btn.click()
 
     # 登录
-    login_btn = browser.find_element_by_xpath('//*[@id="app"]/div/a')
+    login_btn = browser.find_element(By.XPATH, '//*[@id="app"]/div/a')
     login_btn.click()
 
     # 等待页面跳转
@@ -185,10 +194,10 @@ def SliderProcessing():
     global browser
 
     # 获取滑块图base64编码
-    img = browser.find_element_by_xpath('//*[@id="cpc_img"]')
+    img = browser.find_element(By.XPATH, '//*[@id="cpc_img"]')
     imgSrc = img.get_attribute('src')
     imgSrc = imgSrc.replace('data:image/jpg;base64,', '')
-    gap = browser.find_element_by_xpath('//*[@id="small_img"]')
+    gap = browser.find_element(By.XPATH, '//*[@id="small_img"]')
     gapSrc = gap.get_attribute('src')
     gapSrc = gapSrc.replace('data:image/png;base64,', '')
 
@@ -197,13 +206,11 @@ def SliderProcessing():
     # 倍率：65.9%, 66.5%, 66.2%
     result = detect_displacement(gapSrc, imgSrc)
 
-    # print("距离" + str((int(result) / 0.662) + 5))
     # 计算距离
     tracks = trace((int(result) / 0.662) + 5)
-    # print("tracks:" + str(tracks))
 
     # 移动
-    slider = browser.find_element_by_xpath('//*[@id="captcha_modal"]/div/div[3]/div/img')
+    slider = browser.find_element(By.XPATH, '//*[@id="captcha_modal"]/div/div[3]/div/img')
     ActionChains(browser).click_and_hold(slider).perform()
 
     # 滑动

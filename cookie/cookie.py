@@ -9,7 +9,7 @@ from qinglong import addCookie
 
 # Cookie提取
 def clear(ck):
-    global pt_pin, pt_key
+    pt_pin, pt_key = None, None
     for i in ck:
         if i['name'] == 'pt_pin':
             pt_pin = i["value"]
@@ -26,5 +26,3 @@ def merge(key, pin):
     cookie = "pt_key={}; pt_pin={};".format(key, pin)
     print("已获取Cookie：" + cookie)
     return cookie
-    # 上传Cookie
-    # addCookie.add_Cookie(cookie)

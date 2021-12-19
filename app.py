@@ -4,15 +4,16 @@
 # @Email   : nuanxinqing@gmail.com
 # @File    : app.py
 
-import json, re
-import logging
+import json
+import re
 
-from pyselenium import codeSelenium as cps
 from pyselenium import QRSelenium as qps
 from flask import Flask, render_template, jsonify, request
+from qinglong import addCookie
+from pyselenium import codeSelenium as cps
 
 app = Flask(__name__)
-app.config [ 'JSON_SORT_KEYS'] = False
+app.config['JSON_SORT_KEYS'] = False
 
 
 @app.route('/')
@@ -64,9 +65,8 @@ def logincode():
         if num == 1002:
             return jsonify(code=1002, msg="Cookie获取失败，请重新获取")
         else:
-            #
-            #   预留位置（QL面板上传）
-            #
+            # 上传Cookie
+            addCookie.add_Cookie(num)
             return jsonify(code=1001, msg="Cookie获取成功", ck=num)
     else:
         return jsonify(code=1002, msg="请输入正确的验证码")
@@ -74,13 +74,12 @@ def logincode():
 
 @app.route('/QRLogin')
 def qrLogin():
-    # with open("./config/config.json", encoding="utf-8") as f:
-    #     config_json = json.load(f)
-    #
-    # Title = config_json["Main"]["Title"]
-    # qps.QRStart()
-    # return render_template("qrLogin.html", Title=Title)
-    return "暂时禁用"
+    with open("./config/config.json", encoding="utf-8") as f:
+        config_json = json.load(f)
+
+    Title = config_json["Main"]["Title"]
+    qps.QRStart()
+    return render_template("qrLogin.html", Title=Title)
 
 
 @app.route('/api/LoginQR', methods=['POST'])
@@ -89,26 +88,12 @@ def QRLogin():
     if num == 1002:
         return jsonify(code=1002, msg="Cookie获取失败，请重新获取")
     else:
-        return jsonify(code=1001, msg="Cookie获取成功")
+        # 上传Cookie
+        addCookie.add_Cookie(num)
+        return jsonify(code=1001, msg=num)
 
 
 if __name__ == '__main__':
-    login = """
-    ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-    ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-    ◇◇◇◇◇◆◆◆◆◆◆◇◇◇◇◇◇◇◆◆◆◆◆◆◆◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◆◇◇◇◇
-    ◇◇◇◇◇◇◇◆◆◇◇◇◇◇◇◇◇◇◇◇◆◇◇◆◆◆◇◇◇◇◇◇◇◇◆◆◆◇◇◆◆◇◇◇◇
-    ◇◇◇◇◇◇◇◆◇◇◇◇◇◇◇◇◇◇◇◇◆◇◇◇◆◆◇◇◇◇◇◇◇◇◆◆◇◇◇◇◆◆◇◇◇
-    ◇◇◇◇◇◇◇◆◇◇◇◇◇◇◇◇◇◇◇◇◆◇◇◇◆◆◇◇◇◇◇◇◇◇◆◆◇◇◇◇◇◇◇◇◇
-    ◇◇◇◇◇◇◇◆◇◇◇◇◇◇◇◇◇◇◇◇◆◇◇◇◆◆◆◇◇◇◇◇◇◆◆◆◇◇◇◇◇◇◇◇◇
-    ◇◇◇◇◇◇◇◆◇◇◇◇◇◇◇◇◇◇◇◇◆◇◇◇◆◆◇◇◇◇◇◇◇◆◆◆◇◇◇◇◇◇◇◇◇
-    ◇◇◇◆◆◇◇◆◇◇◇◇◇◇◇◇◇◇◇◇◆◇◇◇◆◆◇◇◇◇◇◇◇◇◆◆◇◇◇◇◆◆◇◇◇
-    ◇◇◇◆◆◇◆◆◇◇◇◇◇◇◇◇◇◇◇◇◆◇◇◆◆◆◇◇◇◇◇◇◇◇◆◆◆◇◇◆◆◆◇◇◇
-    ◇◇◇◆◆◆◆◆◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◆◆◇◇◇◇◇◇◇◇◇◇◆◆◆◆◆◆◇◇◇◇
-    ◇◇◇◇◇◆◆◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-    ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-    ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-    ◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-    """
+    login = "Welcome to JDC"
     print(login)
     app.run(host="0.0.0.0", port=5000)

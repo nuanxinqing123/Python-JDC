@@ -1,9 +1,9 @@
 # 说明
-JDCookie获取Python版
+JDCookie获取Python 学习版
 
 当前状态：未开发完毕
 
-可用性（已测）：amd64_Win、amd64_Linux、amd64_Mac
+没有写文字验证部分和Selenium多实例管理，只支持同时间单用户使用
 
 # 修改
 Chromedriver目录内置版本：96.0.4664.45（自行按需求更改）
@@ -17,17 +17,10 @@ ChromeDriver下载地址：http://npm.taobao.org/mirrors/chromedriver
 
 ```text
 # 安装所需工具(栗子：CentOS)
-yum install wget git unzip
+yum install wget git
 
 # 安装所需的库
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
-
-# 创建目录
-mkdir chromedriver && cd chromedriver
-
-# 安装Selenium
-wget https://mirrors.huaweicloud.com/chromium-browser-snapshots/Linux_x64/884014/chrome-linux.zip && unzip chrome-linux.zip
-wget https://npm.taobao.org/mirrors/chromedriver/92.0.4515.43/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && cd ..
 
 # 启动
 python app.py
@@ -41,6 +34,7 @@ python app.py
   "Main": {
     "Title": "网站标题"
   },
+  "Selenium Addr": "Dcoker Chrome地址",
   "QL": {
     "QL_Name": "QL面板名字",
     "Client_ID": "ID",
@@ -52,9 +46,6 @@ python app.py
 
 ## 错误排查
 
-Q：ImportError: libGL.so.1: cannot open shared object file: No such file or directory
-A：解决方法：yum install mesa-libGL.x86_64
+Q：等待添加
 
-Q：
-A：
-
+A：等待添加

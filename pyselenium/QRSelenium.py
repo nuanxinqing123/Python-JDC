@@ -39,23 +39,19 @@ def QRStart():
     global browser
 
     # 启动驱动
-    try:
-        options.binary_location = './chromedriver/chrome-linux/chrome'
-        browser = webdriver.Chrome("./chromedriver/chromedriver", options=options)
-    except:
-        options.binary_location = './chromedriver/chrome-win/chrome.exe'
-        browser = webdriver.Chrome("./chromedriver/chromedriver.exe", options=options)
+    options.binary_location = './chromedriver/chrome-win/chrome.exe'
+    browser = webdriver.Chrome("./chromedriver/chromedriver.exe", options=options)
 
     # 入口地址
     browser.get(
         'https://plogin.m.jd.com/login/login?appid=300&returnurl=https%3A%2F%2Fwq.jd.com%2Fpassport%2FLoginRedirect%3Fstate%3D2251685869%26returnurl%3Dhttps%253A%252F%252Fhome.m.jd.com%252FmyJd%252Fnewhome.action%253Fsceneval%253D2%2526ufc%253D%2526&source=wq_passport')
 
     time.sleep(1)
-    C_Btn = browser.find_element_by_xpath('//*[@id="app"]/div/p[2]/input')
+    C_Btn = browser.find_element(By.XPATH, '//*[@id="app"]/div/p[2]/input')
     C_Btn.click()
 
     # QQ登陆
-    QQ_Btn = browser.find_element_by_xpath('//*[@id="app"]/div/div[6]/p/a')
+    QQ_Btn = browser.find_element(By.XPATH, '//*[@id="app"]/div/div[6]/p/a')
     QQ_Btn.click()
 
     # 全局截图
@@ -63,7 +59,7 @@ def QRStart():
     browser.save_screenshot(picture_name1)
 
     # 局部截图
-    ce = browser.find_element_by_xpath('//*[@id="combine_page"]/div[1]')
+    ce = browser.find_element(By.XPATH, '//*[@id="combine_page"]/div[1]')
     left = ce.location['x']
     top = ce.location['y']
     right = ce.size['width'] + left
