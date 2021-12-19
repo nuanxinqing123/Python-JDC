@@ -4,7 +4,7 @@
 # @Email   : nuanxinqing@gmail.com
 # @File    : QRSelenium.py
 
-import time
+import time, json
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -34,13 +34,18 @@ options.add_experimental_option('excludeSwitches', ['enable-automation'])
 user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
 options.add_argument(f'--user-agent={user_agent}')
 
+with open("./config/config.json", encoding="utf-8") as f:
+    config_json = json.load(f)
+
 
 def QRStart():
     global browser
 
     # 启动驱动
-    options.binary_location = './chromedriver/chrome-win/chrome.exe'
-    browser = webdriver.Chrome("./chromedriver/chromedriver.exe", options=options)
+    browser = webdriver.Remote(
+        command_executor=config_json['RemoteAddress'],
+        options=options
+    )
 
     # 入口地址
     browser.get(

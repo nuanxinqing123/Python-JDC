@@ -4,11 +4,12 @@
 # @Email   : nuanxinqing@gmail.com
 # @File    : codeSelenium.py
 import base64
-import cv2 as cv
-import numpy as np
+import json
 import random
 import time
 
+import cv2 as cv
+import numpy as np
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
@@ -42,19 +43,18 @@ user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/
 options.add_argument(f'--user-agent={user_agent}')
 
 
+with open("./config/config.json", encoding="utf-8") as f:
+    config_json = json.load(f)
+
+
 def CodeStart(phonenumber):
     global browser
 
     # 启动驱动
-    # browser = webdriver.Chrome(options=options)
-    options.binary_location = './chromedriver/chrome-win/chrome.exe'
-    browser = webdriver.Chrome("./chromedriver/chromedriver.exe", options=options)
-    # try:
-    #     options.binary_location = './chromedriver/chrome-linux/chrome'
-    #     browser = webdriver.Chrome("./chromedriver/chromedriver", options=options)
-    # except:
-    #     options.binary_location = './chromedriver/chrome-win/chrome.exe'
-    #     browser = webdriver.Chrome("./chromedriver/chromedriver.exe", options=options)
+    browser = webdriver.Remote(
+        command_executor=config_json['RemoteAddress'],
+        options=options
+    )
 
     browser.get("https://plogin.m.jd.com/login/login")
 
@@ -96,7 +96,7 @@ def CodeStart(phonenumber):
         pass
 
     if x > 5:
-        browser.close()
+        browser.quit()
         return 1003
     else:
         return 1006
@@ -135,7 +135,7 @@ def CodeStart2(phonecode):
         return 1002
 
     finally:
-        browser.close()
+        browser.quit()
 
 
 # 滑动轨迹算法

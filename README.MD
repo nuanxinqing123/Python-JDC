@@ -19,6 +19,9 @@ ChromeDriver下载地址：http://npm.taobao.org/mirrors/chromedriver
 # 安装所需工具(栗子：CentOS)
 yum install wget git
 
+# 安装dockers selenium
+docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome:latest
+
 # 安装所需的库
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
@@ -26,7 +29,7 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 python app.py
 ```
 
-体验地址：http://自己的IP:5000
+体验地址：http://自己的IP:5100
 
 ## 配置文件
 ```json

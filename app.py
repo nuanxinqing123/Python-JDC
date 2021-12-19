@@ -45,7 +45,7 @@ def loginnum():
         if ret:
             res = cps.CodeStart(number)
             if res == 1006:
-                return jsonify(code=1001, msg="正在通过滑块验证，如果长时间没收到验证码，请重新登录")
+                return jsonify(code=1001, msg="已尝试自动通过滑块验证，如果长时间没收到验证码，请重新登录")
             elif res == 1003:
                 return jsonify(code=1002, msg="滑块验证失败，请稍等十分钟后重试")
             else:
@@ -96,4 +96,4 @@ def QRLogin():
 if __name__ == '__main__':
     login = "Welcome to JDC"
     print(login)
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5100)
