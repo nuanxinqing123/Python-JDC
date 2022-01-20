@@ -18,7 +18,10 @@ ChromeDriver下载地址：https://alist.6b7.org/JD/BrowserDrive
 
 ```text
 # 安装所需工具(栗子：CentOS)
-yum install wget git
+yum install git
+
+# 拉取源码
+git clone https://github.com/nuanxinqing123/Python-JDC
 
 # 安装所需的库
 pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
