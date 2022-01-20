@@ -2,11 +2,10 @@
   "Main": {
     "Title": "JD找豆豆"
   },
-  "RemoteAddress": "Selenium Docker地址（举例：http://IP:4444）",
   "QL": {
     "QL_Name": "私人服务器",
-    "Client_ID": "",
-    "Client_Secret": "",
-    "URL": "http://IP:5700"
+    "Client_ID": "VBLJRq7r-1PO",
+    "Client_Secret": "-_cPKuu02akpIYg_7Yc1r5MI",
+    "URL": "http://ql.jd.6b7.xyz"
   }
 }

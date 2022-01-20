@@ -5,12 +5,11 @@ JDCookie获取Python 学习版
 
 没有写文字验证部分和Selenium多实例管理，只支持同时间单用户使用
 
-# 修改
-Chromedriver目录内置版本：96.0.4664.45（自行按需求更改）
+## 驱动
 
-查看自己的谷歌浏览器版本：设置 - 关于Chrome（关于版本选择，假如我的浏览器版本是96.0.4664.45，我们在驱动下载页面选择96.0.4664就可以了，最后一位小数点版本不一致基本不会有影响）
+ChromeDriver下载地址：https://alist.6b7.org/JD/BrowserDrive
 
-ChromeDriver下载地址：http://npm.taobao.org/mirrors/chromedriver
+选择自己系统的驱动下载并解压到chromedriver目录里面
 
 ## 安装
 运行环境(必须)：Python3.7 +
@@ -18,9 +17,6 @@ ChromeDriver下载地址：http://npm.taobao.org/mirrors/chromedriver
 ```text
 # 安装所需工具(栗子：CentOS)
 yum install wget git
-
-# 安装dockers selenium
-docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome:latest
 
 # 安装所需的库
 pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
@@ -37,7 +33,6 @@ python3 app.py
   "Main": {
     "Title": "网站标题"
   },
-  "RemoteAddress": "Dcoker Chrome地址",
   "QL": {
     "QL_Name": "QL面板名字",
     "Client_ID": "ID",

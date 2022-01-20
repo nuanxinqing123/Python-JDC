@@ -7,7 +7,7 @@ import base64
 import json
 import random
 import time
-
+import pyautogui
 import cv2 as cv
 import numpy as np
 from selenium import webdriver
@@ -22,7 +22,7 @@ options = webdriver.ChromeOptions()
 # 屏蔽扩展插件提示内容
 options.add_argument('--ignore-certificate-errors')
 # 静默运行
-options.add_argument('--headless')
+# options.add_argument('--headless')
 # 限制浏览器大小 width：915, height: 1000
 options.add_argument("--window-size=915,1000")
 # 禁用webgl
@@ -35,13 +35,12 @@ options.add_argument('--disable-software-rasterizer')
 # 禁用扩展插件
 options.add_argument('--disable-extensions')
 # 无痕模式
-options.add_argument('--incognito')
+# options.add_argument('--incognito')
 # 开发者模式启动
 options.add_experimental_option('excludeSwitches', ['enable-automation'])
 # 添加 User Agent
 user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25"
 options.add_argument(f'--user-agent={user_agent}')
-
 
 with open("./config/config.json", encoding="utf-8") as f:
     config_json = json.load(f)
@@ -50,11 +49,13 @@ with open("./config/config.json", encoding="utf-8") as f:
 def CodeStart(phonenumber):
     global browser
 
-    # 启动驱动
-    browser = webdriver.Remote(
-        command_executor=config_json['RemoteAddress'],
-        options=options
-    )
+    # 启动驱动(Linux)
+    # options.binary_location = './chromedriver/chrome-linux/chrome'
+    # browser = webdriver.Chrome("./chromedriver/chromedriver", options=options)
+
+    # 启动驱动(Windows)
+    options.binary_location = './chromedriver/chrome-win/chrome.exe'
+    browser = webdriver.Chrome("./chromedriver/chromedriver.exe", options=options)
 
     browser.get("https://plogin.m.jd.com/login/login")
 
@@ -68,10 +69,6 @@ def CodeStart(phonenumber):
     code_btn.click()
 
     time.sleep(0.8)
-
-    # 文字验证：
-    # 图：//*[@id="cpc_img"]
-    # 字体：//*[@id="captcha_modal"]/div/div[3]/div/img
 
     # 判断是否有滑块
     try:
@@ -118,6 +115,56 @@ def CodeStart2(phonecode):
     login_btn = browser.find_element(By.XPATH, '//*[@id="app"]/div/a')
     login_btn.click()
 
+    # 判断登录风险
+    time.sleep(0.3)
+    loginRisk = 0
+    try:
+        loginRisk = browser.find_element(By.XPATH, "//*[@id=\"app\"]/div/div[2]/div[2]/span/a")
+    except:
+        pass
+
+    if loginRisk != 0:
+        loginRisk.click()
+        return 1005
+    else:
+        # 等待页面跳转
+        try:
+            # 等待20秒
+            WebDriverWait(browser, 20, 0.5).until(
+                EC.presence_of_element_located((By.XPATH, "//*[@id=\"mCommonMy\"]/div/img")))
+
+            # 前往个人主页
+            browser.get("https://home.m.jd.com/myJd/newhome.action")
+
+            # 获取Cookie
+            ck = browser.get_cookies()
+            ck = cookie.clear(ck)
+            return ck
+        except:
+            # 获取失败
+            return 1002
+
+        finally:
+            browser.quit()
+
+
+def CodeStart3(idCode):
+    global browser
+
+    time.sleep(3)
+    idCodBtn = browser.find_element(By.XPATH, "//*[@id=\"app\"]/div/div[2]/div[2]/div/div[1]")
+    idCodBtn.click()
+    idCodBtn.click()
+    pyautogui.press(idCode[0])
+    pyautogui.press(idCode[1])
+    pyautogui.press(idCode[2])
+    pyautogui.press(idCode[3])
+    pyautogui.press(idCode[4])
+    pyautogui.press(idCode[5])
+
+    clickOK = browser.find_element(By.XPATH, "//*[@id=\"app\"]/div/div[2]/a")
+    clickOK.click()
+
     # 等待页面跳转
     try:
         WebDriverWait(browser, 20, 0.5).until(
@@ -136,7 +183,6 @@ def CodeStart2(phonecode):
 
     finally:
         browser.quit()
-
 
 # 滑动轨迹算法
 def trace(sum):

@@ -64,12 +64,34 @@ def logincode():
         num = cps.CodeStart2(code)
         if num == 1002:
             return jsonify(code=1002, msg="Cookie获取失败，请重新获取")
-        else:
+        elif num == 1005:
             # 上传Cookie
             addCookie.add_Cookie(num)
+            return jsonify(code=1005, msg="需要身份验证")
+        else:
             return jsonify(code=1001, msg="Cookie获取成功", ck=num)
     else:
         return jsonify(code=1002, msg="请输入正确的验证码")
+
+
+@app.route("/api/idCode", methods=['POST'])
+def idCode():
+    data = request.get_json(force=True)
+    code = data.get("idCode")
+    if len(str(code)) != 6:
+        return jsonify(code=1002, msg="请输入六位身份码")
+    else:
+        idList = []
+        strCode = str(code)
+        for i in strCode:
+            idList.append(str(i))
+
+        num = cps.CodeStart3(idList)
+
+        if num == 1002:
+            return jsonify(code=1002, msg="获取错误")
+        else:
+            return jsonify(code=1001, msg="Cookie获取成功", ck=num)
 
 
 @app.route('/QRLogin')
