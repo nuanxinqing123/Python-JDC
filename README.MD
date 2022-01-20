@@ -9,6 +9,8 @@ JDCookie获取Python 学习版
 
 ChromeDriver下载地址：https://alist.6b7.org/JD/BrowserDrive
 
+在项目同级创建chromedriver目录
+
 选择自己系统的驱动下载并解压到chromedriver目录里面
 
 ## 安装
