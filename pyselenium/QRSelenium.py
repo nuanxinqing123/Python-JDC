@@ -42,12 +42,12 @@ def QRStart():
     global browser
 
     # 启动驱动(Linux)
-    # options.binary_location = './chromedriver/chrome-linux/chrome'
-    # browser = webdriver.Chrome("./chromedriver/chromedriver", options=options)
+    options.binary_location = './chromedriver/chrome-linux/chrome'
+    browser = webdriver.Chrome("./chromedriver/chromedriver", options=options)
 
     # 启动驱动(Windows)
-    options.binary_location = './chromedriver/chrome-win/chrome.exe'
-    browser = webdriver.Chrome("./chromedriver/chromedriver.exe", options=options)
+    # options.binary_location = './chromedriver/chrome-win/chrome.exe'
+    # browser = webdriver.Chrome("./chromedriver/chromedriver.exe", options=options)
 
     # 入口地址
     browser.get(
