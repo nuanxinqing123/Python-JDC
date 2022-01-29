@@ -74,10 +74,51 @@ def QRStart():
     im = Image.open(picture_name1)
     img = im.crop((left, top, right, height))  # 截取二维码部分
     img.save('./static/QR/2.png')
+    return 1001
 
 
 def QRStart2():
     global browser
+    # 判断是否触发短信验证
+    try:
+        phoneCode = browser.find_element(By.XPATH, '//*[@id="app"]/div/div[2]/div[2]/span/a')
+        if phoneCode:
+            phoneCode.click()
+            time.sleep(0.5)
+            phoneCode2 = browser.find_element(By.XPATH, '//*[@id="app"]/div/div[2]/div[2]/button')
+            phoneCode2.click()
+            # 需要二次验证码
+            return 1010
+    except:
+        # 等待页面跳转
+        try:
+            WebDriverWait(browser, 120, 0.5).until(
+                EC.presence_of_element_located((By.XPATH, "//*[@id=\"mCommonMy\"]/div/img")))
+
+            # 前往个人主页
+            browser.get("https://home.m.jd.com/myJd/newhome.action")
+
+            # 获取Cookie
+            ck = browser.get_cookies()
+            ck = cookie.clear(ck)
+            return ck
+        except:
+            return 1002
+
+        finally:
+            browser.quit()
+
+
+def QRPhoneCode(code):
+    global browser
+
+    phoneCode = browser.find_element(By.XPATH, '//*[@id="app"]/div/div[2]/div[2]/div/input')
+    phoneCode.send_keys(code)
+    time.sleep(0.5)
+
+    btnOK = browser.find_element(By.XPATH, '//*[@id="app"]/div/div[2]/a[1]')
+    btnOK.click()
+
     # 等待页面跳转
     try:
         WebDriverWait(browser, 120, 0.5).until(
@@ -92,6 +133,9 @@ def QRStart2():
         return ck
     except:
         return 1002
-
     finally:
-        browser.close()
+        browser.quit()
+
+
+def quitBrowser():
+    browser.quit()
