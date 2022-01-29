@@ -16,7 +16,7 @@ options = webdriver.ChromeOptions()
 # 屏蔽扩展插件提示内容
 options.add_argument('--ignore-certificate-errors')
 # 静默运行
-# options.add_argument('--headless')
+options.add_argument('--headless')
 # 限制浏览器大小 width：915, height: 1000
 options.add_argument("--window-size=915,1000")
 # 在 root 权限下运行
