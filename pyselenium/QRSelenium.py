@@ -42,7 +42,6 @@ def QRStart():
     global browser
 
     # 启动驱动(Linux)
-    options.binary_location = './chromedriver/chrome-linux/chrome'
     browser = webdriver.Chrome("./chromedriver/chromedriver", options=options)
 
     # 启动驱动(Windows)

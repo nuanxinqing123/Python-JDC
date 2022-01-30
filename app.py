@@ -23,14 +23,6 @@ def index():
     Title = config_json["Main"]["Title"]
     return render_template("index.html", Title=Title)
 
-@app.route('/123')
-def index1():
-    # 读取JSON文件
-    with open("./config/config.json", encoding="utf-8") as f:
-        config_json = json.load(f)
-
-    Title = config_json["Main"]["Title"]
-    return render_template("123.html", Title=Title)
 
 @app.route("/api/LoginCode", methods=['POST'])
 def logincode():
