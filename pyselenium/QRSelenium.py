@@ -93,12 +93,18 @@ def QRStart2():
 
             # DEBUG截图查看验证类型
             if config_json["Main"]["Mode"] == "DEBUG":
-                picture_name3 = './static/DEBUG/code.png'
+                picture_name3 = './static/DEBUG/code1.png'
                 browser.save_screenshot(picture_name3)
-                logging.log(logging.DEBUG, "DEBUG验证码已截图")
+                logging.log(logging.DEBUG, "DEBUG code1 验证码已截图")
 
             return 1010
     except:
+        # DEBUG截图查看验证类型
+        if config_json["Main"]["Mode"] == "DEBUG":
+            picture_name3 = './static/DEBUG/code2.png'
+            browser.save_screenshot(picture_name3)
+            logging.log(logging.DEBUG, "DEBUG code2 验证码已截图")
+
         # 等待页面跳转
         try:
             WebDriverWait(browser, 120, 0.5).until(
@@ -127,6 +133,12 @@ def QRPhoneCode(code):
 
     btnOK = browser.find_element(By.XPATH, '//*[@id="app"]/div/div[2]/a[1]')
     btnOK.click()
+
+    # DEBUG截图查看验证类型
+    if config_json["Main"]["Mode"] == "DEBUG":
+        picture_name3 = './static/DEBUG/code2.png'
+        browser.save_screenshot(picture_name3)
+        logging.log(logging.DEBUG, "DEBUG code2 验证码已截图")
 
     # 等待页面跳转
     try:
