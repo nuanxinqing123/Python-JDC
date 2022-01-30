@@ -91,7 +91,14 @@ if __name__ == '__main__':
 
     LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
     DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"
-    logging.basicConfig(filename='JDCookie.log', level=logging.DEBUG, format=LOG_FORMAT, datefmt=DATE_FORMAT)
-    logging.log(logging.DEBUG, "启动成功")
+
+    # 读取JSON文件
+    with open("./config/config.json", encoding="utf-8") as f:
+        config_json = json.load(f)
+
+    if config_json["Main"]["Mode"] == "DEBUG":
+        logging.basicConfig(filename='JDCookie.log', level=logging.DEBUG, format=LOG_FORMAT, datefmt=DATE_FORMAT)
+    else:
+        logging.basicConfig(filename='JDCookie.log', level=logging.INFO, format=LOG_FORMAT, datefmt=DATE_FORMAT)
 
     app.run(host="0.0.0.0", port=5100, debug=False)
