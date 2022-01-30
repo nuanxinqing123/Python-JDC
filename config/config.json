@@ -1,6 +1,7 @@
 {
   "Main": {
-    "Title": "JD找豆豆"
+    "Title": "JD找豆豆",
+    "Mode": "DEBUG"
   },
   "QL": {
     "QL_Name": "私人服务器",

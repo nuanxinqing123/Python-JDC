@@ -5,10 +5,9 @@
 # @File    : app.py
 
 import json
-
+import logging
 from pyselenium import QRSelenium as qps
 from flask import Flask, render_template, jsonify, request
-from qinglong import addCookie
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
@@ -75,7 +74,24 @@ def quit_B():
     return jsonify(code=1001)
 
 
+@app.errorhandler(404)
+def r404():
+    return jsonify(msg="请求页面不存在，发生404错误")
+
+
 if __name__ == '__main__':
-    login = "Welcome to JDC"
+    login = """
+            
+            Welcome to JDC
+                        
+                        By：nuanxinqing
+            
+    """
     print(login)
-    app.run(host="0.0.0.0", port=5100)
+
+    LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+    DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"
+    logging.basicConfig(filename='JDCookie.log', level=logging.DEBUG, format=LOG_FORMAT, datefmt=DATE_FORMAT)
+    logging.log(logging.DEBUG, "启动成功")
+
+    app.run(host="0.0.0.0", port=5100, debug=False)

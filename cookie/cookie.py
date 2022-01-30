@@ -3,6 +3,7 @@
 # @Author  : Nuanxinqing
 # @Email   : nuanxinqing@gmail.com
 # @File    : cookie.py
+import logging
 
 from qinglong import addCookie
 
@@ -25,4 +26,5 @@ def clear(ck):
 def merge(key, pin):
     cookie = "pt_key={}; pt_pin={};".format(key, pin)
     print("已获取Cookie：" + cookie)
+    logging.log(logging.INFO, "已获取Cookie：" + cookie)
     return cookie

@@ -3,7 +3,7 @@
 # @Author  : Nuanxinqing
 # @Email   : nuanxinqing@gmail.com
 # @File    : QRSelenium.py
-
+import logging
 import time, json
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -63,6 +63,7 @@ def QRStart():
     # 全局截图
     picture_name1 = './static/QR/1.png'
     browser.save_screenshot(picture_name1)
+    logging.log(logging.DEBUG, "全局截图完成")
 
     # 局部截图
     ce = browser.find_element(By.XPATH, '//*[@id="combine_page"]/div[1]')
@@ -73,6 +74,7 @@ def QRStart():
     im = Image.open(picture_name1)
     img = im.crop((left, top, right, height))  # 截取二维码部分
     img.save('./static/QR/2.png')
+    logging.log(logging.DEBUG, "局部截图完成")
     return 1001
 
 
@@ -87,6 +89,14 @@ def QRStart2():
             phoneCode2 = browser.find_element(By.XPATH, '//*[@id="app"]/div/div[2]/div[2]/button')
             phoneCode2.click()
             # 需要二次验证码
+            logging.log(logging.INFO, "触发二次验证码")
+
+            # DEBUG截图查看验证类型
+            if config_json["Main"]["Mode"] == "DEBUG":
+                picture_name3 = './static/BEBUG/code.png'
+                browser.save_screenshot(picture_name3)
+                logging.log(logging.DEBUG, "DEBUG验证码已截图")
+
             return 1010
     except:
         # 等待页面跳转
@@ -137,4 +147,5 @@ def QRPhoneCode(code):
 
 
 def quitBrowser():
+    logging.log(logging.INFO, "主动申请退出浏览器")
     browser.quit()
