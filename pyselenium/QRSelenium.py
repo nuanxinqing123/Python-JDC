@@ -93,7 +93,7 @@ def QRStart2():
 
             # DEBUG截图查看验证类型
             if config_json["Main"]["Mode"] == "DEBUG":
-                picture_name3 = './static/BEBUG/code.png'
+                picture_name3 = './static/DEBUG/code.png'
                 browser.save_screenshot(picture_name3)
                 logging.log(logging.DEBUG, "DEBUG验证码已截图")
 
