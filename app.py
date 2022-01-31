@@ -63,8 +63,6 @@ def QRLogin():
     elif num == 1010:
         return jsonify(code=1010, msg="需要二次短信验证码")
     else:
-        # 上传Cookie
-        # addCookie.add_Cookie(num)
         return jsonify(code=1001, msg=num)
 
 

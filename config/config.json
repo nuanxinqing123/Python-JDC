@@ -2,11 +2,5 @@
   "Main": {
     "Title": "JD找豆豆",
     "Mode": "DEBUG"
-  },
-  "QL": {
-    "QL_Name": "私人服务器",
-    "Client_ID": "VBLJRq7r-1PO",
-    "Client_Secret": "-_cPKuu02akpIYg_7Yc1r5MI",
-    "URL": "http://ql.jd.6b7.xyz"
   }
 }
